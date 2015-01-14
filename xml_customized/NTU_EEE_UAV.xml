@@ -260,9 +260,9 @@
                <field type="float" name="x">UWB X position</field>
                <field type="float" name="y">UWB Y position</field>
                <field type="float" name="z">UWB Z position</field>
-               <field type="float" name="roll">Roll angle in rad</field>
-               <field type="float" name="pitch">Pitch angle in rad</field>
-               <field type="float" name="yaw">Yaw angle in rad</field>
+               <field type="float" name="target_x">target desired indoor x</field>
+               <field type="float" name="target_y">target desired indoor y</field>
+               <field type="float" name="target_z">target desired indoor z</field>
 		</message>
 		
 		<message id="231" name="GENERAL_PURPOSE_SAFMC">
@@ -270,7 +270,7 @@
                <field type="float" name="find_drop">payload dropping target find flag</field>
                <field type="float" name="find_land">landing area find flag</field>
                <field type="float" name="cam_shutter">camera shutter flag</field>
-               <field type="float" name="roll">Roll angle in rad</field>
+               <field type="float" name="uwb_good">UWB healthy flag</field>
                <field type="float" name="pitch">Pitch angle in rad</field>
                <field type="float" name="yaw">Yaw angle in rad</field>
 		</message>

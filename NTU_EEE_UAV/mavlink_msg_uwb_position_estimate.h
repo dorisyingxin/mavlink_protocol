@@ -8,16 +8,16 @@ typedef struct __mavlink_uwb_position_estimate_t
  float x; ///< UWB X position
  float y; ///< UWB Y position
  float z; ///< UWB Z position
- float roll; ///< Roll angle in rad
- float pitch; ///< Pitch angle in rad
- float yaw; ///< Yaw angle in rad
+ float target_x; ///< target desired indoor x
+ float target_y; ///< target desired indoor y
+ float target_z; ///< target desired indoor z
 } mavlink_uwb_position_estimate_t;
 
 #define MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN 32
 #define MAVLINK_MSG_ID_230_LEN 32
 
-#define MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC 151
-#define MAVLINK_MSG_ID_230_CRC 151
+#define MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC 196
+#define MAVLINK_MSG_ID_230_CRC 196
 
 
 
@@ -28,9 +28,9 @@ typedef struct __mavlink_uwb_position_estimate_t
          { "x", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_uwb_position_estimate_t, x) }, \
          { "y", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_uwb_position_estimate_t, y) }, \
          { "z", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_uwb_position_estimate_t, z) }, \
-         { "roll", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_uwb_position_estimate_t, roll) }, \
-         { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_uwb_position_estimate_t, pitch) }, \
-         { "yaw", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_uwb_position_estimate_t, yaw) }, \
+         { "target_x", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_uwb_position_estimate_t, target_x) }, \
+         { "target_y", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_uwb_position_estimate_t, target_y) }, \
+         { "target_z", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_uwb_position_estimate_t, target_z) }, \
          } \
 }
 
@@ -45,13 +45,13 @@ typedef struct __mavlink_uwb_position_estimate_t
  * @param x UWB X position
  * @param y UWB Y position
  * @param z UWB Z position
- * @param roll Roll angle in rad
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param target_x target desired indoor x
+ * @param target_y target desired indoor y
+ * @param target_z target desired indoor z
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_uwb_position_estimate_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint64_t usec, float x, float y, float z, float roll, float pitch, float yaw)
+						       uint64_t usec, float x, float y, float z, float target_x, float target_y, float target_z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN];
@@ -59,9 +59,9 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack(uint8_t system_id,
 	_mav_put_float(buf, 8, x);
 	_mav_put_float(buf, 12, y);
 	_mav_put_float(buf, 16, z);
-	_mav_put_float(buf, 20, roll);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_float(buf, 20, target_x);
+	_mav_put_float(buf, 24, target_y);
+	_mav_put_float(buf, 28, target_z);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN);
 #else
@@ -70,9 +70,9 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack(uint8_t system_id,
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
-	packet.roll = roll;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.target_x = target_x;
+	packet.target_y = target_y;
+	packet.target_z = target_z;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN);
 #endif
@@ -95,14 +95,14 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack(uint8_t system_id,
  * @param x UWB X position
  * @param y UWB Y position
  * @param z UWB Z position
- * @param roll Roll angle in rad
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param target_x target desired indoor x
+ * @param target_y target desired indoor y
+ * @param target_z target desired indoor z
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_uwb_position_estimate_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint64_t usec,float x,float y,float z,float roll,float pitch,float yaw)
+						           uint64_t usec,float x,float y,float z,float target_x,float target_y,float target_z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN];
@@ -110,9 +110,9 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack_chan(uint8_t syste
 	_mav_put_float(buf, 8, x);
 	_mav_put_float(buf, 12, y);
 	_mav_put_float(buf, 16, z);
-	_mav_put_float(buf, 20, roll);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_float(buf, 20, target_x);
+	_mav_put_float(buf, 24, target_y);
+	_mav_put_float(buf, 28, target_z);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN);
 #else
@@ -121,9 +121,9 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack_chan(uint8_t syste
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
-	packet.roll = roll;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.target_x = target_x;
+	packet.target_y = target_y;
+	packet.target_z = target_z;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN);
 #endif
@@ -146,7 +146,7 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_pack_chan(uint8_t syste
  */
 static inline uint16_t mavlink_msg_uwb_position_estimate_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_uwb_position_estimate_t* uwb_position_estimate)
 {
-	return mavlink_msg_uwb_position_estimate_pack(system_id, component_id, msg, uwb_position_estimate->usec, uwb_position_estimate->x, uwb_position_estimate->y, uwb_position_estimate->z, uwb_position_estimate->roll, uwb_position_estimate->pitch, uwb_position_estimate->yaw);
+	return mavlink_msg_uwb_position_estimate_pack(system_id, component_id, msg, uwb_position_estimate->usec, uwb_position_estimate->x, uwb_position_estimate->y, uwb_position_estimate->z, uwb_position_estimate->target_x, uwb_position_estimate->target_y, uwb_position_estimate->target_z);
 }
 
 /**
@@ -160,7 +160,7 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_encode(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_uwb_position_estimate_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_uwb_position_estimate_t* uwb_position_estimate)
 {
-	return mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, chan, msg, uwb_position_estimate->usec, uwb_position_estimate->x, uwb_position_estimate->y, uwb_position_estimate->z, uwb_position_estimate->roll, uwb_position_estimate->pitch, uwb_position_estimate->yaw);
+	return mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, chan, msg, uwb_position_estimate->usec, uwb_position_estimate->x, uwb_position_estimate->y, uwb_position_estimate->z, uwb_position_estimate->target_x, uwb_position_estimate->target_y, uwb_position_estimate->target_z);
 }
 
 /**
@@ -171,13 +171,13 @@ static inline uint16_t mavlink_msg_uwb_position_estimate_encode_chan(uint8_t sys
  * @param x UWB X position
  * @param y UWB Y position
  * @param z UWB Z position
- * @param roll Roll angle in rad
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param target_x target desired indoor x
+ * @param target_y target desired indoor y
+ * @param target_z target desired indoor z
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_uwb_position_estimate_send(mavlink_channel_t chan, uint64_t usec, float x, float y, float z, float roll, float pitch, float yaw)
+static inline void mavlink_msg_uwb_position_estimate_send(mavlink_channel_t chan, uint64_t usec, float x, float y, float z, float target_x, float target_y, float target_z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN];
@@ -185,9 +185,9 @@ static inline void mavlink_msg_uwb_position_estimate_send(mavlink_channel_t chan
 	_mav_put_float(buf, 8, x);
 	_mav_put_float(buf, 12, y);
 	_mav_put_float(buf, 16, z);
-	_mav_put_float(buf, 20, roll);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_float(buf, 20, target_x);
+	_mav_put_float(buf, 24, target_y);
+	_mav_put_float(buf, 28, target_z);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE, buf, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC);
@@ -200,9 +200,9 @@ static inline void mavlink_msg_uwb_position_estimate_send(mavlink_channel_t chan
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
-	packet.roll = roll;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.target_x = target_x;
+	packet.target_y = target_y;
+	packet.target_z = target_z;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE, (const char *)&packet, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC);
@@ -220,7 +220,7 @@ static inline void mavlink_msg_uwb_position_estimate_send(mavlink_channel_t chan
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_uwb_position_estimate_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float x, float y, float z, float roll, float pitch, float yaw)
+static inline void mavlink_msg_uwb_position_estimate_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float x, float y, float z, float target_x, float target_y, float target_z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -228,9 +228,9 @@ static inline void mavlink_msg_uwb_position_estimate_send_buf(mavlink_message_t 
 	_mav_put_float(buf, 8, x);
 	_mav_put_float(buf, 12, y);
 	_mav_put_float(buf, 16, z);
-	_mav_put_float(buf, 20, roll);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_float(buf, 20, target_x);
+	_mav_put_float(buf, 24, target_y);
+	_mav_put_float(buf, 28, target_z);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE, buf, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC);
@@ -243,9 +243,9 @@ static inline void mavlink_msg_uwb_position_estimate_send_buf(mavlink_message_t 
 	packet->x = x;
 	packet->y = y;
 	packet->z = z;
-	packet->roll = roll;
-	packet->pitch = pitch;
-	packet->yaw = yaw;
+	packet->target_x = target_x;
+	packet->target_y = target_y;
+	packet->target_z = target_z;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE, (const char *)packet, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN, MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_CRC);
@@ -302,31 +302,31 @@ static inline float mavlink_msg_uwb_position_estimate_get_z(const mavlink_messag
 }
 
 /**
- * @brief Get field roll from uwb_position_estimate message
+ * @brief Get field target_x from uwb_position_estimate message
  *
- * @return Roll angle in rad
+ * @return target desired indoor x
  */
-static inline float mavlink_msg_uwb_position_estimate_get_roll(const mavlink_message_t* msg)
+static inline float mavlink_msg_uwb_position_estimate_get_target_x(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  20);
 }
 
 /**
- * @brief Get field pitch from uwb_position_estimate message
+ * @brief Get field target_y from uwb_position_estimate message
  *
- * @return Pitch angle in rad
+ * @return target desired indoor y
  */
-static inline float mavlink_msg_uwb_position_estimate_get_pitch(const mavlink_message_t* msg)
+static inline float mavlink_msg_uwb_position_estimate_get_target_y(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  24);
 }
 
 /**
- * @brief Get field yaw from uwb_position_estimate message
+ * @brief Get field target_z from uwb_position_estimate message
  *
- * @return Yaw angle in rad
+ * @return target desired indoor z
  */
-static inline float mavlink_msg_uwb_position_estimate_get_yaw(const mavlink_message_t* msg)
+static inline float mavlink_msg_uwb_position_estimate_get_target_z(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  28);
 }
@@ -344,9 +344,9 @@ static inline void mavlink_msg_uwb_position_estimate_decode(const mavlink_messag
 	uwb_position_estimate->x = mavlink_msg_uwb_position_estimate_get_x(msg);
 	uwb_position_estimate->y = mavlink_msg_uwb_position_estimate_get_y(msg);
 	uwb_position_estimate->z = mavlink_msg_uwb_position_estimate_get_z(msg);
-	uwb_position_estimate->roll = mavlink_msg_uwb_position_estimate_get_roll(msg);
-	uwb_position_estimate->pitch = mavlink_msg_uwb_position_estimate_get_pitch(msg);
-	uwb_position_estimate->yaw = mavlink_msg_uwb_position_estimate_get_yaw(msg);
+	uwb_position_estimate->target_x = mavlink_msg_uwb_position_estimate_get_target_x(msg);
+	uwb_position_estimate->target_y = mavlink_msg_uwb_position_estimate_get_target_y(msg);
+	uwb_position_estimate->target_z = mavlink_msg_uwb_position_estimate_get_target_z(msg);
 #else
 	memcpy(uwb_position_estimate, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_UWB_POSITION_ESTIMATE_LEN);
 #endif

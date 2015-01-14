@@ -986,9 +986,9 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         	packet1.x = packet_in.x;
         	packet1.y = packet_in.y;
         	packet1.z = packet_in.z;
-        	packet1.roll = packet_in.roll;
-        	packet1.pitch = packet_in.pitch;
-        	packet1.yaw = packet_in.yaw;
+        	packet1.target_x = packet_in.target_x;
+        	packet1.target_y = packet_in.target_y;
+        	packet1.target_z = packet_in.target_z;
         
         
 
@@ -998,12 +998,12 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_pack(system_id, component_id, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_uwb_position_estimate_pack(system_id, component_id, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.target_x , packet1.target_y , packet1.target_z );
 	mavlink_msg_uwb_position_estimate_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.target_x , packet1.target_y , packet1.target_z );
 	mavlink_msg_uwb_position_estimate_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1016,7 +1016,7 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_send(MAVLINK_COMM_1 , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_uwb_position_estimate_send(MAVLINK_COMM_1 , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.target_x , packet1.target_y , packet1.target_z );
 	mavlink_msg_uwb_position_estimate_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -1035,7 +1035,7 @@ static void mavlink_test_general_purpose_safmc(uint8_t system_id, uint8_t compon
         	packet1.find_drop = packet_in.find_drop;
         	packet1.find_land = packet_in.find_land;
         	packet1.cam_shutter = packet_in.cam_shutter;
-        	packet1.roll = packet_in.roll;
+        	packet1.uwb_good = packet_in.uwb_good;
         	packet1.pitch = packet_in.pitch;
         	packet1.yaw = packet_in.yaw;
         
@@ -1047,12 +1047,12 @@ static void mavlink_test_general_purpose_safmc(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_general_purpose_safmc_pack(system_id, component_id, &msg , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_general_purpose_safmc_pack(system_id, component_id, &msg , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.uwb_good , packet1.pitch , packet1.yaw );
 	mavlink_msg_general_purpose_safmc_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_general_purpose_safmc_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_general_purpose_safmc_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.uwb_good , packet1.pitch , packet1.yaw );
 	mavlink_msg_general_purpose_safmc_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1065,7 +1065,7 @@ static void mavlink_test_general_purpose_safmc(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_general_purpose_safmc_send(MAVLINK_COMM_1 , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.roll , packet1.pitch , packet1.yaw );
+	mavlink_msg_general_purpose_safmc_send(MAVLINK_COMM_1 , packet1.usec , packet1.find_drop , packet1.find_land , packet1.cam_shutter , packet1.uwb_good , packet1.pitch , packet1.yaw );
 	mavlink_msg_general_purpose_safmc_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
