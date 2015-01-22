@@ -274,5 +274,21 @@
                <field type="float" name="pitch">Pitch angle in rad</field>
                <field type="float" name="yaw">Yaw angle in rad</field>
 		</message>
+		
+		<message id="232" name="FRUITDOVE">
+               <field type="uint64_t" name="usec">Timestamp (microseconds, synced to UNIX time or since system boot)</field>
+               <field type="float" name="gps_raw_x">gps raw ned projection X position</field>
+               <field type="float" name="gps_raw_y">gps raw ned projection Y position</field>
+               <field type="float" name="gps_raw_z">gps raw ned projection Z position</field>
+               <field type="int32_t" name="gps_raw_lat_int">gps raw latitude</field>
+               <field type="int32_t" name="gps_raw_lon_int">gps raw longitude</field>
+               <field type="int32_t" name="gps_raw_alt_int">gps raw altitude</field>
+			   <field type="uint16_t" name="eph">GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: UINT16_MAX</field>
+               <field type="uint16_t" name="epv">GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: UINT16_MAX</field>
+			   <field type="float" name="local_ned_x">X Position in final fused ned local</field>
+               <field type="float" name="local_ned_y">Y Position in final fused ned local</field>
+               <field type="float" name="local_ned_z">Z Position in final fused ned local</field>
+			   
+		</message>
      </messages>
 </mavlink>
