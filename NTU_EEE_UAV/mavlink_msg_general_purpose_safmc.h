@@ -9,15 +9,15 @@ typedef struct __mavlink_general_purpose_safmc_t
  float find_land; ///< landing area find flag
  float cam_shutter; ///< camera shutter flag
  float uwb_good; ///< UWB healthy flag
- float pitch; ///< Pitch angle in rad
- float yaw; ///< Yaw angle in rad
+ int32_t drop_x; ///< image pixel x axis
+ int32_t drop_y; ///< image pixel y axis
 } mavlink_general_purpose_safmc_t;
 
 #define MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN 32
 #define MAVLINK_MSG_ID_231_LEN 32
 
-#define MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC 151
-#define MAVLINK_MSG_ID_231_CRC 151
+#define MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC 202
+#define MAVLINK_MSG_ID_231_CRC 202
 
 
 
@@ -29,8 +29,8 @@ typedef struct __mavlink_general_purpose_safmc_t
          { "find_land", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_general_purpose_safmc_t, find_land) }, \
          { "cam_shutter", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_general_purpose_safmc_t, cam_shutter) }, \
          { "uwb_good", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_general_purpose_safmc_t, uwb_good) }, \
-         { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_general_purpose_safmc_t, pitch) }, \
-         { "yaw", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_general_purpose_safmc_t, yaw) }, \
+         { "drop_x", NULL, MAVLINK_TYPE_INT32_T, 0, 24, offsetof(mavlink_general_purpose_safmc_t, drop_x) }, \
+         { "drop_y", NULL, MAVLINK_TYPE_INT32_T, 0, 28, offsetof(mavlink_general_purpose_safmc_t, drop_y) }, \
          } \
 }
 
@@ -46,12 +46,12 @@ typedef struct __mavlink_general_purpose_safmc_t
  * @param find_land landing area find flag
  * @param cam_shutter camera shutter flag
  * @param uwb_good UWB healthy flag
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param drop_x image pixel x axis
+ * @param drop_y image pixel y axis
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_general_purpose_safmc_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, float pitch, float yaw)
+						       uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, int32_t drop_x, int32_t drop_y)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN];
@@ -60,8 +60,8 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack(uint8_t system_id,
 	_mav_put_float(buf, 12, find_land);
 	_mav_put_float(buf, 16, cam_shutter);
 	_mav_put_float(buf, 20, uwb_good);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_int32_t(buf, 24, drop_x);
+	_mav_put_int32_t(buf, 28, drop_y);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN);
 #else
@@ -71,8 +71,8 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack(uint8_t system_id,
 	packet.find_land = find_land;
 	packet.cam_shutter = cam_shutter;
 	packet.uwb_good = uwb_good;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.drop_x = drop_x;
+	packet.drop_y = drop_y;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN);
 #endif
@@ -96,13 +96,13 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack(uint8_t system_id,
  * @param find_land landing area find flag
  * @param cam_shutter camera shutter flag
  * @param uwb_good UWB healthy flag
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param drop_x image pixel x axis
+ * @param drop_y image pixel y axis
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_general_purpose_safmc_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint64_t usec,float find_drop,float find_land,float cam_shutter,float uwb_good,float pitch,float yaw)
+						           uint64_t usec,float find_drop,float find_land,float cam_shutter,float uwb_good,int32_t drop_x,int32_t drop_y)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN];
@@ -111,8 +111,8 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack_chan(uint8_t syste
 	_mav_put_float(buf, 12, find_land);
 	_mav_put_float(buf, 16, cam_shutter);
 	_mav_put_float(buf, 20, uwb_good);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_int32_t(buf, 24, drop_x);
+	_mav_put_int32_t(buf, 28, drop_y);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN);
 #else
@@ -122,8 +122,8 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack_chan(uint8_t syste
 	packet.find_land = find_land;
 	packet.cam_shutter = cam_shutter;
 	packet.uwb_good = uwb_good;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.drop_x = drop_x;
+	packet.drop_y = drop_y;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN);
 #endif
@@ -146,7 +146,7 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_pack_chan(uint8_t syste
  */
 static inline uint16_t mavlink_msg_general_purpose_safmc_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_general_purpose_safmc_t* general_purpose_safmc)
 {
-	return mavlink_msg_general_purpose_safmc_pack(system_id, component_id, msg, general_purpose_safmc->usec, general_purpose_safmc->find_drop, general_purpose_safmc->find_land, general_purpose_safmc->cam_shutter, general_purpose_safmc->uwb_good, general_purpose_safmc->pitch, general_purpose_safmc->yaw);
+	return mavlink_msg_general_purpose_safmc_pack(system_id, component_id, msg, general_purpose_safmc->usec, general_purpose_safmc->find_drop, general_purpose_safmc->find_land, general_purpose_safmc->cam_shutter, general_purpose_safmc->uwb_good, general_purpose_safmc->drop_x, general_purpose_safmc->drop_y);
 }
 
 /**
@@ -160,7 +160,7 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_encode(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_general_purpose_safmc_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_general_purpose_safmc_t* general_purpose_safmc)
 {
-	return mavlink_msg_general_purpose_safmc_pack_chan(system_id, component_id, chan, msg, general_purpose_safmc->usec, general_purpose_safmc->find_drop, general_purpose_safmc->find_land, general_purpose_safmc->cam_shutter, general_purpose_safmc->uwb_good, general_purpose_safmc->pitch, general_purpose_safmc->yaw);
+	return mavlink_msg_general_purpose_safmc_pack_chan(system_id, component_id, chan, msg, general_purpose_safmc->usec, general_purpose_safmc->find_drop, general_purpose_safmc->find_land, general_purpose_safmc->cam_shutter, general_purpose_safmc->uwb_good, general_purpose_safmc->drop_x, general_purpose_safmc->drop_y);
 }
 
 /**
@@ -172,12 +172,12 @@ static inline uint16_t mavlink_msg_general_purpose_safmc_encode_chan(uint8_t sys
  * @param find_land landing area find flag
  * @param cam_shutter camera shutter flag
  * @param uwb_good UWB healthy flag
- * @param pitch Pitch angle in rad
- * @param yaw Yaw angle in rad
+ * @param drop_x image pixel x axis
+ * @param drop_y image pixel y axis
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_general_purpose_safmc_send(mavlink_channel_t chan, uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, float pitch, float yaw)
+static inline void mavlink_msg_general_purpose_safmc_send(mavlink_channel_t chan, uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, int32_t drop_x, int32_t drop_y)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN];
@@ -186,8 +186,8 @@ static inline void mavlink_msg_general_purpose_safmc_send(mavlink_channel_t chan
 	_mav_put_float(buf, 12, find_land);
 	_mav_put_float(buf, 16, cam_shutter);
 	_mav_put_float(buf, 20, uwb_good);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_int32_t(buf, 24, drop_x);
+	_mav_put_int32_t(buf, 28, drop_y);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC, buf, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC);
@@ -201,8 +201,8 @@ static inline void mavlink_msg_general_purpose_safmc_send(mavlink_channel_t chan
 	packet.find_land = find_land;
 	packet.cam_shutter = cam_shutter;
 	packet.uwb_good = uwb_good;
-	packet.pitch = pitch;
-	packet.yaw = yaw;
+	packet.drop_x = drop_x;
+	packet.drop_y = drop_y;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC, (const char *)&packet, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC);
@@ -220,7 +220,7 @@ static inline void mavlink_msg_general_purpose_safmc_send(mavlink_channel_t chan
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_general_purpose_safmc_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, float pitch, float yaw)
+static inline void mavlink_msg_general_purpose_safmc_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float find_drop, float find_land, float cam_shutter, float uwb_good, int32_t drop_x, int32_t drop_y)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -229,8 +229,8 @@ static inline void mavlink_msg_general_purpose_safmc_send_buf(mavlink_message_t 
 	_mav_put_float(buf, 12, find_land);
 	_mav_put_float(buf, 16, cam_shutter);
 	_mav_put_float(buf, 20, uwb_good);
-	_mav_put_float(buf, 24, pitch);
-	_mav_put_float(buf, 28, yaw);
+	_mav_put_int32_t(buf, 24, drop_x);
+	_mav_put_int32_t(buf, 28, drop_y);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC, buf, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC);
@@ -244,8 +244,8 @@ static inline void mavlink_msg_general_purpose_safmc_send_buf(mavlink_message_t 
 	packet->find_land = find_land;
 	packet->cam_shutter = cam_shutter;
 	packet->uwb_good = uwb_good;
-	packet->pitch = pitch;
-	packet->yaw = yaw;
+	packet->drop_x = drop_x;
+	packet->drop_y = drop_y;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC, (const char *)packet, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN, MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_CRC);
@@ -312,23 +312,23 @@ static inline float mavlink_msg_general_purpose_safmc_get_uwb_good(const mavlink
 }
 
 /**
- * @brief Get field pitch from general_purpose_safmc message
+ * @brief Get field drop_x from general_purpose_safmc message
  *
- * @return Pitch angle in rad
+ * @return image pixel x axis
  */
-static inline float mavlink_msg_general_purpose_safmc_get_pitch(const mavlink_message_t* msg)
+static inline int32_t mavlink_msg_general_purpose_safmc_get_drop_x(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  24);
+	return _MAV_RETURN_int32_t(msg,  24);
 }
 
 /**
- * @brief Get field yaw from general_purpose_safmc message
+ * @brief Get field drop_y from general_purpose_safmc message
  *
- * @return Yaw angle in rad
+ * @return image pixel y axis
  */
-static inline float mavlink_msg_general_purpose_safmc_get_yaw(const mavlink_message_t* msg)
+static inline int32_t mavlink_msg_general_purpose_safmc_get_drop_y(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  28);
+	return _MAV_RETURN_int32_t(msg,  28);
 }
 
 /**
@@ -345,8 +345,8 @@ static inline void mavlink_msg_general_purpose_safmc_decode(const mavlink_messag
 	general_purpose_safmc->find_land = mavlink_msg_general_purpose_safmc_get_find_land(msg);
 	general_purpose_safmc->cam_shutter = mavlink_msg_general_purpose_safmc_get_cam_shutter(msg);
 	general_purpose_safmc->uwb_good = mavlink_msg_general_purpose_safmc_get_uwb_good(msg);
-	general_purpose_safmc->pitch = mavlink_msg_general_purpose_safmc_get_pitch(msg);
-	general_purpose_safmc->yaw = mavlink_msg_general_purpose_safmc_get_yaw(msg);
+	general_purpose_safmc->drop_x = mavlink_msg_general_purpose_safmc_get_drop_x(msg);
+	general_purpose_safmc->drop_y = mavlink_msg_general_purpose_safmc_get_drop_y(msg);
 #else
 	memcpy(general_purpose_safmc, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_GENERAL_PURPOSE_SAFMC_LEN);
 #endif

@@ -271,8 +271,8 @@
                <field type="float" name="find_land">landing area find flag</field>
                <field type="float" name="cam_shutter">camera shutter flag</field>
                <field type="float" name="uwb_good">UWB healthy flag</field>
-               <field type="float" name="pitch">Pitch angle in rad</field>
-               <field type="float" name="yaw">Yaw angle in rad</field>
+               <field type="int32_t" name="drop_x">image pixel x axis</field>
+               <field type="int32_t" name="drop_y">image pixel y axis</field>
 		</message>
 		
 		<message id="232" name="FRUITDOVE">
