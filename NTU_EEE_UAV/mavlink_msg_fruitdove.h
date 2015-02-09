@@ -16,19 +16,20 @@ typedef struct __mavlink_fruitdove_t
  float local_ned_z; ///< Z Position in final fused ned local
  uint16_t eph; ///< GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
  uint16_t epv; ///< GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
+ uint8_t satellites_visible; ///< Number of satellites visible. If unknown, set to 255
 } mavlink_fruitdove_t;
 
-#define MAVLINK_MSG_ID_FRUITDOVE_LEN 48
-#define MAVLINK_MSG_ID_232_LEN 48
+#define MAVLINK_MSG_ID_FRUITDOVE_LEN 49
+#define MAVLINK_MSG_ID_232_LEN 49
 
-#define MAVLINK_MSG_ID_FRUITDOVE_CRC 171
-#define MAVLINK_MSG_ID_232_CRC 171
+#define MAVLINK_MSG_ID_FRUITDOVE_CRC 201
+#define MAVLINK_MSG_ID_232_CRC 201
 
 
 
 #define MAVLINK_MESSAGE_INFO_FRUITDOVE { \
 	"FRUITDOVE", \
-	12, \
+	13, \
 	{  { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_fruitdove_t, usec) }, \
          { "gps_raw_x", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_fruitdove_t, gps_raw_x) }, \
          { "gps_raw_y", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_fruitdove_t, gps_raw_y) }, \
@@ -41,6 +42,7 @@ typedef struct __mavlink_fruitdove_t
          { "local_ned_z", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_fruitdove_t, local_ned_z) }, \
          { "eph", NULL, MAVLINK_TYPE_UINT16_T, 0, 44, offsetof(mavlink_fruitdove_t, eph) }, \
          { "epv", NULL, MAVLINK_TYPE_UINT16_T, 0, 46, offsetof(mavlink_fruitdove_t, epv) }, \
+         { "satellites_visible", NULL, MAVLINK_TYPE_UINT8_T, 0, 48, offsetof(mavlink_fruitdove_t, satellites_visible) }, \
          } \
 }
 
@@ -63,10 +65,11 @@ typedef struct __mavlink_fruitdove_t
  * @param local_ned_x X Position in final fused ned local
  * @param local_ned_y Y Position in final fused ned local
  * @param local_ned_z Z Position in final fused ned local
+ * @param satellites_visible Number of satellites visible. If unknown, set to 255
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_fruitdove_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z)
+						       uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z, uint8_t satellites_visible)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FRUITDOVE_LEN];
@@ -82,6 +85,7 @@ static inline uint16_t mavlink_msg_fruitdove_pack(uint8_t system_id, uint8_t com
 	_mav_put_float(buf, 40, local_ned_z);
 	_mav_put_uint16_t(buf, 44, eph);
 	_mav_put_uint16_t(buf, 46, epv);
+	_mav_put_uint8_t(buf, 48, satellites_visible);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FRUITDOVE_LEN);
 #else
@@ -98,6 +102,7 @@ static inline uint16_t mavlink_msg_fruitdove_pack(uint8_t system_id, uint8_t com
 	packet.local_ned_z = local_ned_z;
 	packet.eph = eph;
 	packet.epv = epv;
+	packet.satellites_visible = satellites_visible;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_FRUITDOVE_LEN);
 #endif
@@ -128,11 +133,12 @@ static inline uint16_t mavlink_msg_fruitdove_pack(uint8_t system_id, uint8_t com
  * @param local_ned_x X Position in final fused ned local
  * @param local_ned_y Y Position in final fused ned local
  * @param local_ned_z Z Position in final fused ned local
+ * @param satellites_visible Number of satellites visible. If unknown, set to 255
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_fruitdove_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint64_t usec,float gps_raw_x,float gps_raw_y,float gps_raw_z,int32_t gps_raw_lat_int,int32_t gps_raw_lon_int,int32_t gps_raw_alt_int,uint16_t eph,uint16_t epv,float local_ned_x,float local_ned_y,float local_ned_z)
+						           uint64_t usec,float gps_raw_x,float gps_raw_y,float gps_raw_z,int32_t gps_raw_lat_int,int32_t gps_raw_lon_int,int32_t gps_raw_alt_int,uint16_t eph,uint16_t epv,float local_ned_x,float local_ned_y,float local_ned_z,uint8_t satellites_visible)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FRUITDOVE_LEN];
@@ -148,6 +154,7 @@ static inline uint16_t mavlink_msg_fruitdove_pack_chan(uint8_t system_id, uint8_
 	_mav_put_float(buf, 40, local_ned_z);
 	_mav_put_uint16_t(buf, 44, eph);
 	_mav_put_uint16_t(buf, 46, epv);
+	_mav_put_uint8_t(buf, 48, satellites_visible);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FRUITDOVE_LEN);
 #else
@@ -164,6 +171,7 @@ static inline uint16_t mavlink_msg_fruitdove_pack_chan(uint8_t system_id, uint8_
 	packet.local_ned_z = local_ned_z;
 	packet.eph = eph;
 	packet.epv = epv;
+	packet.satellites_visible = satellites_visible;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_FRUITDOVE_LEN);
 #endif
@@ -186,7 +194,7 @@ static inline uint16_t mavlink_msg_fruitdove_pack_chan(uint8_t system_id, uint8_
  */
 static inline uint16_t mavlink_msg_fruitdove_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_fruitdove_t* fruitdove)
 {
-	return mavlink_msg_fruitdove_pack(system_id, component_id, msg, fruitdove->usec, fruitdove->gps_raw_x, fruitdove->gps_raw_y, fruitdove->gps_raw_z, fruitdove->gps_raw_lat_int, fruitdove->gps_raw_lon_int, fruitdove->gps_raw_alt_int, fruitdove->eph, fruitdove->epv, fruitdove->local_ned_x, fruitdove->local_ned_y, fruitdove->local_ned_z);
+	return mavlink_msg_fruitdove_pack(system_id, component_id, msg, fruitdove->usec, fruitdove->gps_raw_x, fruitdove->gps_raw_y, fruitdove->gps_raw_z, fruitdove->gps_raw_lat_int, fruitdove->gps_raw_lon_int, fruitdove->gps_raw_alt_int, fruitdove->eph, fruitdove->epv, fruitdove->local_ned_x, fruitdove->local_ned_y, fruitdove->local_ned_z, fruitdove->satellites_visible);
 }
 
 /**
@@ -200,7 +208,7 @@ static inline uint16_t mavlink_msg_fruitdove_encode(uint8_t system_id, uint8_t c
  */
 static inline uint16_t mavlink_msg_fruitdove_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_fruitdove_t* fruitdove)
 {
-	return mavlink_msg_fruitdove_pack_chan(system_id, component_id, chan, msg, fruitdove->usec, fruitdove->gps_raw_x, fruitdove->gps_raw_y, fruitdove->gps_raw_z, fruitdove->gps_raw_lat_int, fruitdove->gps_raw_lon_int, fruitdove->gps_raw_alt_int, fruitdove->eph, fruitdove->epv, fruitdove->local_ned_x, fruitdove->local_ned_y, fruitdove->local_ned_z);
+	return mavlink_msg_fruitdove_pack_chan(system_id, component_id, chan, msg, fruitdove->usec, fruitdove->gps_raw_x, fruitdove->gps_raw_y, fruitdove->gps_raw_z, fruitdove->gps_raw_lat_int, fruitdove->gps_raw_lon_int, fruitdove->gps_raw_alt_int, fruitdove->eph, fruitdove->epv, fruitdove->local_ned_x, fruitdove->local_ned_y, fruitdove->local_ned_z, fruitdove->satellites_visible);
 }
 
 /**
@@ -219,10 +227,11 @@ static inline uint16_t mavlink_msg_fruitdove_encode_chan(uint8_t system_id, uint
  * @param local_ned_x X Position in final fused ned local
  * @param local_ned_y Y Position in final fused ned local
  * @param local_ned_z Z Position in final fused ned local
+ * @param satellites_visible Number of satellites visible. If unknown, set to 255
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_fruitdove_send(mavlink_channel_t chan, uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z)
+static inline void mavlink_msg_fruitdove_send(mavlink_channel_t chan, uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z, uint8_t satellites_visible)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FRUITDOVE_LEN];
@@ -238,6 +247,7 @@ static inline void mavlink_msg_fruitdove_send(mavlink_channel_t chan, uint64_t u
 	_mav_put_float(buf, 40, local_ned_z);
 	_mav_put_uint16_t(buf, 44, eph);
 	_mav_put_uint16_t(buf, 46, epv);
+	_mav_put_uint8_t(buf, 48, satellites_visible);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FRUITDOVE, buf, MAVLINK_MSG_ID_FRUITDOVE_LEN, MAVLINK_MSG_ID_FRUITDOVE_CRC);
@@ -258,6 +268,7 @@ static inline void mavlink_msg_fruitdove_send(mavlink_channel_t chan, uint64_t u
 	packet.local_ned_z = local_ned_z;
 	packet.eph = eph;
 	packet.epv = epv;
+	packet.satellites_visible = satellites_visible;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FRUITDOVE, (const char *)&packet, MAVLINK_MSG_ID_FRUITDOVE_LEN, MAVLINK_MSG_ID_FRUITDOVE_CRC);
@@ -275,7 +286,7 @@ static inline void mavlink_msg_fruitdove_send(mavlink_channel_t chan, uint64_t u
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_fruitdove_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z)
+static inline void mavlink_msg_fruitdove_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t usec, float gps_raw_x, float gps_raw_y, float gps_raw_z, int32_t gps_raw_lat_int, int32_t gps_raw_lon_int, int32_t gps_raw_alt_int, uint16_t eph, uint16_t epv, float local_ned_x, float local_ned_y, float local_ned_z, uint8_t satellites_visible)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -291,6 +302,7 @@ static inline void mavlink_msg_fruitdove_send_buf(mavlink_message_t *msgbuf, mav
 	_mav_put_float(buf, 40, local_ned_z);
 	_mav_put_uint16_t(buf, 44, eph);
 	_mav_put_uint16_t(buf, 46, epv);
+	_mav_put_uint8_t(buf, 48, satellites_visible);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FRUITDOVE, buf, MAVLINK_MSG_ID_FRUITDOVE_LEN, MAVLINK_MSG_ID_FRUITDOVE_CRC);
@@ -311,6 +323,7 @@ static inline void mavlink_msg_fruitdove_send_buf(mavlink_message_t *msgbuf, mav
 	packet->local_ned_z = local_ned_z;
 	packet->eph = eph;
 	packet->epv = epv;
+	packet->satellites_visible = satellites_visible;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FRUITDOVE, (const char *)packet, MAVLINK_MSG_ID_FRUITDOVE_LEN, MAVLINK_MSG_ID_FRUITDOVE_CRC);
@@ -447,6 +460,16 @@ static inline float mavlink_msg_fruitdove_get_local_ned_z(const mavlink_message_
 }
 
 /**
+ * @brief Get field satellites_visible from fruitdove message
+ *
+ * @return Number of satellites visible. If unknown, set to 255
+ */
+static inline uint8_t mavlink_msg_fruitdove_get_satellites_visible(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  48);
+}
+
+/**
  * @brief Decode a fruitdove message into a struct
  *
  * @param msg The message to decode
@@ -467,6 +490,7 @@ static inline void mavlink_msg_fruitdove_decode(const mavlink_message_t* msg, ma
 	fruitdove->local_ned_z = mavlink_msg_fruitdove_get_local_ned_z(msg);
 	fruitdove->eph = mavlink_msg_fruitdove_get_eph(msg);
 	fruitdove->epv = mavlink_msg_fruitdove_get_epv(msg);
+	fruitdove->satellites_visible = mavlink_msg_fruitdove_get_satellites_visible(msg);
 #else
 	memcpy(fruitdove, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_FRUITDOVE_LEN);
 #endif

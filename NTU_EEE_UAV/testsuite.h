@@ -1076,7 +1076,7 @@ static void mavlink_test_fruitdove(uint8_t system_id, uint8_t component_id, mavl
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_fruitdove_t packet_in = {
-		93372036854775807ULL,73.0,101.0,129.0,963498504,963498712,963498920,241.0,269.0,297.0,19523,19627
+		93372036854775807ULL,73.0,101.0,129.0,963498504,963498712,963498920,241.0,269.0,297.0,19523,19627,149
     };
 	mavlink_fruitdove_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -1092,6 +1092,7 @@ static void mavlink_test_fruitdove(uint8_t system_id, uint8_t component_id, mavl
         	packet1.local_ned_z = packet_in.local_ned_z;
         	packet1.eph = packet_in.eph;
         	packet1.epv = packet_in.epv;
+        	packet1.satellites_visible = packet_in.satellites_visible;
         
         
 
@@ -1101,12 +1102,12 @@ static void mavlink_test_fruitdove(uint8_t system_id, uint8_t component_id, mavl
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_fruitdove_pack(system_id, component_id, &msg , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z );
+	mavlink_msg_fruitdove_pack(system_id, component_id, &msg , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z , packet1.satellites_visible );
 	mavlink_msg_fruitdove_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_fruitdove_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z );
+	mavlink_msg_fruitdove_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z , packet1.satellites_visible );
 	mavlink_msg_fruitdove_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1119,7 +1120,7 @@ static void mavlink_test_fruitdove(uint8_t system_id, uint8_t component_id, mavl
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_fruitdove_send(MAVLINK_COMM_1 , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z );
+	mavlink_msg_fruitdove_send(MAVLINK_COMM_1 , packet1.usec , packet1.gps_raw_x , packet1.gps_raw_y , packet1.gps_raw_z , packet1.gps_raw_lat_int , packet1.gps_raw_lon_int , packet1.gps_raw_alt_int , packet1.eph , packet1.epv , packet1.local_ned_x , packet1.local_ned_y , packet1.local_ned_z , packet1.satellites_visible );
 	mavlink_msg_fruitdove_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
