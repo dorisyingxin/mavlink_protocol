@@ -263,6 +263,7 @@
                <field type="float" name="target_x">target desired indoor x</field>
                <field type="float" name="target_y">target desired indoor y</field>
                <field type="float" name="target_z">target desired indoor z</field>
+               <field type="float" name="target_yaw">target desired indoor yaw</field>
 		</message>
 		
 		<message id="231" name="GENERAL_PURPOSE_SAFMC">
