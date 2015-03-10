@@ -264,6 +264,7 @@
                <field type="float" name="target_y">target desired indoor y</field>
                <field type="float" name="target_z">target desired indoor z</field>
                <field type="float" name="target_yaw">target desired indoor yaw</field>
+               <field type="int32_t" name="flight_mode">target flight mode 0: takeoff, 1: path, 2: land</field>
 		</message>
 		
 		<message id="231" name="GENERAL_PURPOSE_SAFMC">
