@@ -978,7 +978,7 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_uwb_position_estimate_t packet_in = {
-		93372036854775807ULL,73.0,101.0,129.0,157.0,185.0,213.0,241.0,269.0,963499544
+		93372036854775807ULL,73.0,101.0,129.0,157.0,185.0,213.0,241.0,269.0,297.0,325.0,963499960
     };
 	mavlink_uwb_position_estimate_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -987,6 +987,8 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         	packet1.y = packet_in.y;
         	packet1.z = packet_in.z;
         	packet1.yaw = packet_in.yaw;
+        	packet1.vx = packet_in.vx;
+        	packet1.vy = packet_in.vy;
         	packet1.target_x = packet_in.target_x;
         	packet1.target_y = packet_in.target_y;
         	packet1.target_z = packet_in.target_z;
@@ -1001,12 +1003,12 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_pack(system_id, component_id, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
+	mavlink_msg_uwb_position_estimate_pack(system_id, component_id, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.vx , packet1.vy , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
 	mavlink_msg_uwb_position_estimate_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
+	mavlink_msg_uwb_position_estimate_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.vx , packet1.vy , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
 	mavlink_msg_uwb_position_estimate_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1019,7 +1021,7 @@ static void mavlink_test_uwb_position_estimate(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_uwb_position_estimate_send(MAVLINK_COMM_1 , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
+	mavlink_msg_uwb_position_estimate_send(MAVLINK_COMM_1 , packet1.usec , packet1.x , packet1.y , packet1.z , packet1.yaw , packet1.vx , packet1.vy , packet1.target_x , packet1.target_y , packet1.target_z , packet1.target_yaw , packet1.flight_mode );
 	mavlink_msg_uwb_position_estimate_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
